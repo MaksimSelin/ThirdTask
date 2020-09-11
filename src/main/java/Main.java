@@ -6,23 +6,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-//        Bonds bonds1 = new Bonds(1, "123456", new GregorianCalendar(1970,0,25).getTime(), "RU");
-//        Bonds bonds2 = new Bonds(2, "654321", new GregorianCalendar(1980,3,16).getTime(), "EU");
-//        List<Bonds> list = new ArrayList<Bonds>();
-//        list.add(bonds1);
-//        list.add(bonds2);
-//        Organization organization = new Organization("organization1", "org1", "street1",
-//                "132654", "159753", "852963741", list,
-//                new GregorianCalendar(1870,0,11).getTime() );
 
-//        String json = objectMapper.writeValueAsString(organization);
-//        System.out.println(json);
         ObjectMapper objectMapper = new ObjectMapper();
         List<Organization> list = objectMapper.readValue(new File("jsonformatter.json"), new TypeReference<List<Organization>>(){});
 
@@ -46,10 +35,46 @@ public class Main {
         System.out.println("\nВсего: "+k);
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("\nВведите дату (формат ввода «ДД.ММ.ГГГГ», «ДД.ММ,ГГ», «ДД/ММ/ГГГГ» и «ДД/ММ/ГГ»): ");
-        String str = reader.readLine();
+        while (true) {
+            System.out.println("\nВведите дату (формат ввода «ДД.ММ.ГГГГ», «ДД.ММ,ГГ», «ДД/ММ/ГГГГ» и «ДД/ММ/ГГ»): ");
+            String str = reader.readLine();
+            String[] possibleDateFormat = new String[]{"dd.MM.yyyy", "dd.MM,yy", "dd/MM/yyyy", "dd/MM/yy"};
+            Date date = null;
+            for (String dateString : possibleDateFormat) {
+                try {
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateString);
+                    simpleDateFormat.setLenient(false);
+                    date = simpleDateFormat.parse(str);
+                } catch (Exception e) {
 
-        LocalDateTime ldt = LocalDateTime.now();
-        System.out.println(ldt.toLocalDate());
+                }
+            }
+            if (date != null){
+                Date finalDate = date;
+                list.stream().forEach(x -> {
+                    if (x.getFoundationDate().after(finalDate))System.out.println("Название Компании: "
+                     + x.getFullName() + " дата создания: " + x.getFoundationDate());
+                });
+                break;
+            }
+            else System.out.println("Некорректный ввод");
+        }
+
+        System.out.println("Введите код валюты (EU, USD, RUB)");
+        while (true) {
+            AtomicInteger l = new AtomicInteger();
+            String str = reader.readLine();
+            list.stream().forEach(x -> x.getBonds().forEach( bonds -> {
+                if (bonds.getCurrencyCode().equals(str)){
+                    System.out.println("id = " + bonds.getId() + " code = " + bonds.getCode());
+                    l.getAndIncrement();
+                }
+            }));
+            if (l.intValue() > 0){
+                break;
+            }
+            else System.out.println("Повторите ввод");
+
+        }
     }
 }
