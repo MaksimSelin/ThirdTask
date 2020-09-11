@@ -1,0 +1,71 @@
+﻿[
+  {
+    "fullName": "organization1",
+    "shortName": "org1",
+    "address": "street1",
+    "phoneNumber": "132654",
+    "bonds": [
+      {
+        "id": 1,
+        "code": "AMZN-RM",
+        "expirationDate": 5022062800000,
+        "currencyCode": "RUB"
+      },
+      {
+        "id": 1,
+        "code": "MSFT-RM",
+        "expirationDate": 324680400000,
+        "currencyCode": "EU"
+      }
+    ],
+    "foundationDate": -3154820400000,
+    "inn": "159753",
+    "ogrn": "852963741"
+  },
+  {
+    "fullName": "organization2",
+    "shortName": "org2",
+    "address": "street1",
+    "phoneNumber": "347189",
+    "bonds": [
+      {
+        "id": 1,
+        "code": "GOOG-RM",
+        "expirationDate": 324680465478,
+        "currencyCode": "USD"
+      },
+      {
+        "id": 2,
+        "code": "GOOG-RM",
+        "expirationDate": 324680400000,
+        "currencyCode": "USD"
+      }
+    ],
+    "foundationDate": 315482040000,
+    "inn": "646446",
+    "ogrn": "9537514862"
+  },
+  {
+    "fullName": "organization3",
+    "shortName": "org3",
+    "address": "street3",
+    "phoneNumber": "951951",
+    "bonds": [
+      {
+        "id": 2,
+        "code": "AMZN-RM",
+        "expirationDate": 102062800000,
+        "currencyCode": "RUB"
+      },
+      {
+        "id": 2,
+        "code": "GOOG-RM",
+        "expirationDate": 10324680400000,
+        "currencyCode": "USD"
+      }
+    ],
+    "foundationDate": -3154820400000,
+    "inn": "159753",
+    "ogrn": "852963741"
+  }
+]
